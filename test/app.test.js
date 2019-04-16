@@ -7,8 +7,8 @@ describe('app routes', () => {
   beforeEach(() => {
     return Profile.drop();
   });
-  
-  it('can create a new profile', ()=>{
+
+  it('can create a new profile', () => {
     return request(app)
       .post('/profile')
       .send({
@@ -22,6 +22,21 @@ describe('app routes', () => {
           tagline: expect.any(String),
           _id: expect.any(String)
         });
+      });
+  });
+
+  it('can get a list of profiles', () => {
+    return Profile
+      .create({
+        name: 'testeeee',
+        favoriteCharacter: 'Fry'
+      })
+      .then(() => {
+        return request(app)
+          .get('/profile');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
       });
   });
 })
