@@ -29,7 +29,8 @@ describe('app routes', () => {
     return Profile
       .create({
         name: 'testeeee',
-        favoriteCharacter: 'Fry'
+        favoriteCharacter: 'Fry',
+        tagline: 'cool fake tagline'
       })
       .then(() => {
         return request(app)
@@ -39,5 +40,24 @@ describe('app routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
-})
-;
+  it('can get a profile by id', ()=>{
+    return Profile
+      .create({
+        name: 'testeeee',
+        favoriteCharacter: 'Fry',
+        tagline: 'cool fake tagline'
+      })
+      .then(createdProfile => {
+        return request(app)
+          .get(`/profile/${createdProfile._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'testeeee',
+          favoriteCharacter: 'Fry',
+          tagline: expect.any(String),
+          _id: expect.any(String)
+        });
+      });
+  });
+});
