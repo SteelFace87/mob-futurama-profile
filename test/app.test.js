@@ -40,7 +40,8 @@ describe('app routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
-  it('can get a profile by id', ()=>{
+
+  it('can get a profile by id', () => {
     return Profile
       .create({
         name: 'testeeee',
